@@ -1,0 +1,45 @@
+classDiagram
+    class App {
+        +main()
+    }
+
+    class Interactions {
+        <<interface>>
+        +pull(boolean isOpen) boolean
+        +swing(boolean isOpen) boolean
+    }
+
+    class InteractDoor {
+        +pull(boolean isOpen) boolean
+        +swing(boolean isOpen) boolean
+    }
+
+    class Door {
+        <<abstract>>
+        #String name
+        #String type
+        #boolean isOpen
+        #InteractDoor interact
+        ~Door(String N)
+        +get(String attr) String
+        +set(String attr, String value)
+        +info()
+        <<abstract>> interact()
+    }
+
+    class PanelDoor {
+        ~PanelDoor(String N)
+        +interact()
+    }
+
+    class TrapDoor {
+        ~TrapDoor(String N)
+        +interact()
+    }
+
+    %% Relationships
+    Interactions <|.. InteractDoor : implements
+    Door *-- InteractDoor : composition
+    PanelDoor --|> Door : extends
+    TrapDoor --|> Door : extends
+    App ..> TrapDoor : instantiates
